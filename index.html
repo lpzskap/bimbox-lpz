@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BIMBOX Viewer - Miller Co Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #38bdf8;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body class="p-10">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-sky-400 mb-10 border-b border-slate-700 pb-4">BIMBOX <span
+                class="text-white font-light">Viewer</span></h1>
+
+        <div id="grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        </div>
+    </div>
+
+    <script>
+        // ESTOS SON TUS DATOS. Puedes agregar o quitar filas aquí.
+        const datos = [
+            { id: "001", nivel: "NIVEL 01", nombre: "LOSA ESTRUCTURAL", link3d: "https://google.com", linkPdf: "https://google.com", estado: "OK" },
+            { id: "002", nivel: "NIVEL 02", nombre: "VIGAS Y COLUMNAS", link3d: "#", linkPdf: "#", estado: "EN PROCESO" },
+            { id: "003", nivel: "CUBIERTA", nombre: "CERCHAS METÁLICAS", link3d: "#", linkPdf: "#", estado: "PENDIENTE" }
+        ];
+
+        const grid = document.getElementById('grid');
+        grid.innerHTML = datos.map(item => `
+            <div class="card p-6 rounded-xl shadow-2xl">
+                <div class="flex justify-between mb-4">
+                    <span class="text-xs text-sky-400 font-mono">${item.id}</span>
+                    <span class="text-xs font-bold px-2 py-0.5 rounded bg-slate-700">${item.estado}</span>
+                </div>
+                <h2 class="text-2xl font-bold">${item.nivel}</h2>
+                <p class="text-slate-400 text-sm mb-6">${item.nombre}</p>
+                <div class="space-y-3">
+                    <a href="${item.link3d}" target="_blank" class="block bg-sky-600 hover:bg-sky-500 text-center py-2 rounded-lg font-bold transition">VISOR 3D</a>
+                    <a href="${item.linkPdf}" target="_blank" class="block bg-slate-600 hover:bg-slate-500 text-center py-2 rounded-lg font-bold transition">PLANO PDF</a>
+                </div>
+            </div>
+        `).join('');
+    </script>
+</body>
+
+</html>
