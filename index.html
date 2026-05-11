@@ -2,65 +2,63 @@
 <html lang="es">
 
 <head>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <meta charset="UTF-8">
-    <title>BIMBOX Viewer - Miller Co Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIMBOX - LPZ</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
             background: #0f172a;
-            color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: sans-serif;
         }
 
         .card {
             background: #1e293b;
             border: 1px solid #334155;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            border-color: #38bdf8;
-            transform: translateY(-5px);
         }
     </style>
 </head>
 
-<body class="p-10">
-    <div class="max-w-6xl mx-auto">
-        <h1 class="text-4xl font-bold text-sky-400 mb-10 border-b border-slate-700 pb-4">BIMBOX <span
-                class="text-white font-light">Viewer</span></h1>
+<body class="p-4 md:p-10">
+    <div class="max-w-md mx-auto">
+        <h1 class="text-3xl font-bold text-sky-400 mb-8 border-b border-slate-700 pb-4 text-center">
+            BIMBOX <span class="text-white font-light">LPZ</span>
+        </h1>
 
-        <div id="grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div id="grid" class="space-y-6">
         </div>
     </div>
 
     <script>
-        // ESTOS SON TUS DATOS. Puedes agregar o quitar filas aquí.
+        // DATOS DEL PROYECTO
         const datos = [
             {
                 id: "01",
                 nivel: "ESTRUCTURA",
-                nombre: "VER EN REALIDAD AUMENTADA",
+                nombre: "MODELO REAL RA",
                 link3d: "https://autode.sk/4d5P1kx",
-                archivoGlb: "modelo.glb",
+                archivoGlb: "modelo.glb", // Asegúrate que en GitHub se llame igual
                 estado: "OK"
             }
         ];
 
         const grid = document.getElementById('grid');
         grid.innerHTML = datos.map(proyecto => `
-            <div class="card p-6 rounded-xl shadow-2xl bg-white">
-                <div class="flex justify-between items-start mb-4">
+            <div class="card p-6 rounded-2xl shadow-2xl">
+                <div class="flex justify-between items-start mb-6">
                     <div>
-                        <p class="text-xs font-bold text-blue-600 uppercase tracking-wider">${proyecto.nivel}</p>
-                        <h3 class="text-lg font-bold text-gray-800">${proyecto.nombre}</h3>
+                        <p class="text-xs font-bold text-sky-400 uppercase tracking-widest">${proyecto.nivel}</p>
+                        <h3 class="text-xl font-bold text-white">${proyecto.nombre}</h3>
                     </div>
-                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded">${proyecto.estado}</span>
+                    <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded border border-green-500/50">
+                        ${proyecto.estado}
+                    </span>
                 </div>
                 
-                <div class="flex flex-col gap-2">
-                    <a href="${proyecto.link3d}" target="_blank" class="block w-full text-center bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                <div class="flex flex-col gap-3">
+                    <a href="${proyecto.link3d}" target="_blank" 
+                       class="block w-full text-center bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">
                         VISOR 3D (AUTODESK)
                     </a>
                     
@@ -70,8 +68,8 @@
                         ar-modes="webxr scene-viewer quick-look" 
                         camera-controls 
                         shadow-intensity="1" 
-                        style="width: 100%; height: 45px; background-color: #10b981; border-radius: 8px;">
-                        <button slot="ar-button" style="width: 100%; height: 100%; border: none; background: transparent; color: white; font-weight: bold;">
+                        style="width: 100%; height: 50px; background-color: #10b981; border-radius: 12px;">
+                        <button slot="ar-button" style="width: 100%; height: 100%; border: none; background: transparent; color: white; font-weight: bold; font-size: 14px;">
                             🤳 PROYECTAR EN OBRA (RA)
                         </button>
                     </model-viewer>
