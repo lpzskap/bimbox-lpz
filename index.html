@@ -3,58 +3,66 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BIMBOX LPZ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
-            background: #0f172a;
-            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            font-family: ui-sans-serif, system-ui, sans-serif;
         }
 
-        .card {
-            background: #1e293b;
+        .card-custom {
+            background-color: #1e293b;
             border: 1px solid #334155;
+            shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 
 <body class="p-6 flex flex-col items-center justify-center min-h-screen">
+
     <div class="w-full max-w-sm">
-        <h1 class="text-3xl font-bold text-sky-400 mb-8 border-b border-slate-700 pb-4 text-center">
+        <h1 class="text-3xl font-bold text-sky-400 mb-8 border-b border-slate-700 pb-4 text-center tracking-tighter">
             BIMBOX <span class="text-white font-light">LPZ</span>
         </h1>
 
-        <div class="card p-6 rounded-2xl shadow-2xl">
+        <div class="card-custom p-6 rounded-3xl">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <p class="text-[10px] font-bold text-sky-400 uppercase tracking-[0.2em]">ESTRUCTURA</p>
-                    <h3 class="text-lg font-bold text-white uppercase">Cimentación Real</h3>
+                    <p class="text-[10px] font-black text-sky-500 uppercase tracking-[0.2em]">ESTRUCTURA</p>
+                    <h3 class="text-xl font-bold text-white leading-tight">CIMENTACIÓN<br>PROYECTO REAL</h3>
                 </div>
                 <span
-                    class="px-2 py-0.5 bg-green-500/20 text-green-400 text-[10px] font-bold rounded border border-green-500/50">ACTIVO</span>
+                    class="px-2 py-1 bg-green-500/20 text-green-400 text-[10px] font-bold rounded-lg border border-green-500/40">ACTIVO</span>
             </div>
 
-            <div class="flex flex-col gap-3">
-                <a href="https://autode.sk/4d5P1kx" target="_blank"
-                    class="block w-full text-center bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition active:scale-95 shadow-lg shadow-blue-900/20">
-                    VISOR 3D (AUTODESK)
+            <div class="flex flex-col gap-4">
+                <a href="https://autode.sk/49HQivL" target="_blank"
+                    class="flex items-center justify-center w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-sm hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-900/40">
+                    📂 ABRIR VISOR 3D
                 </a>
 
-                <model-viewer src="modelo.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls
-                    shadow-intensity="1"
-                    style="width: 100%; height: 50px; background-color: #10b981; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);">
-                    <button slot="ar-button"
-                        style="width: 100%; height: 100%; border: none; background: transparent; color: white; font-weight: 800; font-size: 14px; cursor: pointer; text-transform: uppercase;">
-                        🤳 PROYECTAR EN OBRA (RA)
-                    </button>
-                </model-viewer>
+                <div class="relative w-full h-[60px]">
+                    <model-viewer src="modelo.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls
+                        shadow-intensity="1" alt="Modelo 3D para RA"
+                        style="width: 100%; height: 100%; background-color: #10b981; border-radius: 1rem;">
+
+                        <button slot="ar-button"
+                            style="width: 100%; height: 100%; border: none; background: transparent; color: white; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+                            🤳 PROYECTAR EN OBRA
+                        </button>
+                    </model-viewer>
+                </div>
             </div>
         </div>
 
-        <p class="text-center text-slate-500 text-xs mt-8">© 2026 - Leandro Pérez - Catania</p>
+        <p class="text-center text-slate-500 text-[10px] mt-10 font-medium tracking-widest uppercase">
+            © 2026 • LEANDRO LOPEZ • CATANIA, IT
+        </p>
     </div>
+
 </body>
 
 </html>
