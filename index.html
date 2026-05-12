@@ -644,6 +644,15 @@ header {
 
 .hidden { display: none !important; }
 
+/* ── DRAG & DROP ────────────────────────────── */
+.th-sistema[draggable="true"],
+.th-nivel[draggable="true"] { cursor: grab; }
+.th-sistema[draggable="true"]:active,
+.th-nivel[draggable="true"]:active { cursor: grabbing; }
+.drag-over-col { background: var(--amber-dim) !important; outline: 2px dashed var(--amber); outline-offset: -2px; }
+.drag-over-row { background: var(--amber-dim) !important; outline: 2px dashed var(--amber); outline-offset: -2px; }
+.drag-ghost { opacity: .35; }
+
 /* ── TOAST ──────────────────────────────────── */
 .toast {
   position: fixed;
@@ -823,7 +832,11 @@ function renderMatrix() {
   let html = '<thead><tr>';
   html += '<th class="th-corner">NIV↓ SIS→</th>';
   p.sistemas.forEach((s, i) => {
-    html += `<th class="th-sistema">
+    html += `<th class="th-sistema" draggable="true" data-sis-idx="${i}"
+      ondragstart="dragSisStart(event,${i})"
+      ondragover="dragSisOver(event,${i})"
+      ondragleave="dragSisLeave(event)"
+      ondrop="dropSis(event,${i})">
       <span class="th-sistema-code">${s.cod}</span>
       <span class="th-sistema-label">${s.label}</span>
       <button class="del-btn" onclick="delSistema(${i})" title="Eliminar">×</button>
@@ -833,7 +846,11 @@ function renderMatrix() {
 
   p.niveles.forEach((n, i) => {
     html += `<tr>
-      <td class="th-nivel">
+      <td class="th-nivel" draggable="true" data-nvl-idx="${i}"
+        ondragstart="dragNvlStart(event,${i})"
+        ondragover="dragNvlOver(event,${i})"
+        ondragleave="dragNvlLeave(event)"
+        ondrop="dropNvl(event,${i})">
         <span class="th-nivel-code">${n.cod}</span>
         <span class="th-nivel-label">${n.label}</span>
         <button class="del-btn" onclick="delNivel(${i})" title="Eliminar">×</button>
@@ -1058,6 +1075,80 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+// ── DRAG & DROP SISTEMAS (columnas) ──────────
+let _dragSisIdx = null;
+
+function dragSisStart(e, i) {
+  _dragSisIdx = i;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => {
+    const el = document.querySelector(`[data-sis-idx="${i}"]`);
+    if (el) el.classList.add('drag-ghost');
+  }, 0);
+}
+
+function dragSisOver(e, i) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.drag-over-col').forEach(el => el.classList.remove('drag-over-col'));
+  document.querySelectorAll(`[data-sis-idx="${i}"]`).forEach(el => el.classList.add('drag-over-col'));
+}
+
+function dragSisLeave(e) {
+  document.querySelectorAll('.drag-over-col').forEach(el => el.classList.remove('drag-over-col'));
+}
+
+function dropSis(e, toIdx) {
+  e.preventDefault();
+  if (_dragSisIdx === null || _dragSisIdx === toIdx) { cleanDrag(); return; }
+  const arr = proj().sistemas;
+  const [moved] = arr.splice(_dragSisIdx, 1);
+  arr.splice(toIdx, 0, moved);
+  saveState(); render(); cleanDrag();
+  showToast('Sistema reordenado');
+}
+
+// ── DRAG & DROP NIVELES (filas) ───────────────
+let _dragNvlIdx = null;
+
+function dragNvlStart(e, i) {
+  _dragNvlIdx = i;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => {
+    const el = document.querySelector(`[data-nvl-idx="${i}"]`);
+    if (el) el.classList.add('drag-ghost');
+  }, 0);
+}
+
+function dragNvlOver(e, i) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.drag-over-row').forEach(el => el.classList.remove('drag-over-row'));
+  const el = document.querySelector(`[data-nvl-idx="${i}"]`);
+  if (el) el.classList.add('drag-over-row');
+}
+
+function dragNvlLeave(e) {
+  document.querySelectorAll('.drag-over-row').forEach(el => el.classList.remove('drag-over-row'));
+}
+
+function dropNvl(e, toIdx) {
+  e.preventDefault();
+  if (_dragNvlIdx === null || _dragNvlIdx === toIdx) { cleanDrag(); return; }
+  const arr = proj().niveles;
+  const [moved] = arr.splice(_dragNvlIdx, 1);
+  arr.splice(toIdx, 0, moved);
+  saveState(); render(); cleanDrag();
+  showToast('Nivel reordenado');
+}
+
+function cleanDrag() {
+  _dragSisIdx = null;
+  _dragNvlIdx = null;
+  document.querySelectorAll('.drag-over-col, .drag-over-row, .drag-ghost')
+    .forEach(el => el.classList.remove('drag-over-col','drag-over-row','drag-ghost'));
 }
 
 // ── INIT ─────────────────────────────────────
