@@ -1,0 +1,301 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.bx{padding:1rem 0;font-family:var(--font-sans)}
+.bx-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.bx-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-secondary)}
+.bx-title{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.btn{padding:6px 14px;font-size:12px;font-weight:500;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-primary{background:var(--color-text-primary);color:var(--color-background-primary);border-color:transparent}
+.btn-primary:hover{opacity:.85;background:var(--color-text-primary)}
+.toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.add-input{font-size:11px;padding:4px 8px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);width:90px}
+.add-input:focus{outline:none;border-color:var(--color-border-primary)}
+.matrix-wrap{overflow-x:auto;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th,td{border:.5px solid var(--color-border-tertiary);text-align:center;padding:0}
+.th-corner{background:var(--color-background-tertiary);width:60px;min-width:60px;font-size:9px;font-weight:600;color:var(--color-text-secondary);padding:8px 4px;letter-spacing:.05em;text-transform:uppercase}
+.th-nivel{background:var(--color-background-secondary);width:60px;min-width:60px;padding:7px 4px;font-weight:600;font-size:11px;color:var(--color-text-primary);position:relative}
+.th-sistema{background:var(--color-background-secondary);padding:6px 3px;font-weight:600;font-size:9px;color:var(--color-text-primary);min-width:62px;position:relative;line-height:1.3}
+.th-sistema small{display:block;font-weight:400;font-size:8px;color:var(--color-text-tertiary);margin-top:1px}
+.th-master-niveles{background:#185FA5;color:#E6F1FB;font-weight:600;font-size:9px;padding:6px 4px;min-width:72px;line-height:1.4;text-transform:uppercase;letter-spacing:.04em}
+.cell-gray{background:#E8F5EE;cursor:pointer;padding:5px 2px;transition:background .15s}
+.cell-gray:hover{background:#9FE1CB}
+.cell-name{font-size:8.5px;font-weight:600;color:#085041;line-height:1.4;display:block}
+.row-master-sistemas td{background:#D6E9F8}
+.cell-master-sistema{padding:6px 3px;cursor:pointer;transition:background .15s}
+.cell-master-sistema:hover{background:#B8D8F0}
+.cell-master-sistema .cell-name{font-size:8.5px;color:#0C447C;font-weight:600}
+.cell-master-nivel{background:#D6E9F8;padding:6px 3px;cursor:pointer;transition:background .15s}
+.cell-master-nivel:hover{background:#B8D8F0}
+.cell-master-nivel .cell-name{font-size:8.5px;color:#0C447C;font-weight:600}
+.cell-master-master{background:#185FA5;padding:6px 3px;cursor:pointer}
+.cell-master-master:hover{background:#0D4A8A}
+.cell-master-master .cell-name{color:#E6F1FB;font-size:8.5px;font-weight:700}
+.row-doc td{background:var(--color-background-tertiary);text-align:center;padding:7px;font-size:9px;font-weight:600;color:var(--color-text-secondary);letter-spacing:.08em;text-transform:uppercase}
+.del-btn{position:absolute;top:1px;right:1px;width:13px;height:13px;border-radius:2px;background:rgba(220,50,50,.12);color:#C0392B;border:none;cursor:pointer;font-size:9px;display:none;align-items:center;justify-content:center;line-height:1;padding:0}
+th:hover .del-btn{display:flex}
+.stats{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 14px;display:flex;flex-direction:column;gap:2px}
+.stat-n{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.stat-l{font-size:10px;color:var(--color-text-secondary)}
+.legend{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--color-text-secondary)}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:100}
+.modal-box{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:.5px solid var(--color-border-secondary);padding:1.25rem;width:340px;max-width:92vw}
+.modal-title{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--color-text-primary)}
+.modal-sub{font-size:11px;color:var(--color-text-secondary);margin-bottom:10px;line-height:1.5}
+.modal-code{font-family:var(--font-mono);font-size:11px;background:var(--color-background-secondary);padding:10px 12px;border-radius:var(--border-radius-md);margin-bottom:12px;line-height:1.9;border:.5px solid var(--color-border-tertiary);white-space:pre-wrap;word-break:break-all;color:var(--color-text-primary);max-height:220px;overflow-y:auto}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.hidden{display:none}
+.divider{width:.5px;height:20px;background:var(--color-border-secondary)}
+</style>
+
+<div class="bx">
+  <div class="bx-top">
+    <div>
+      <p class="bx-label">BIMBOX® · Estándar Miller &amp; Co.</p>
+      <p class="bx-title">Matriz de datos — Template base</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" onclick="showFileList()"><i class="ti ti-files" aria-hidden="true"></i> Archivos</button>
+      <button class="btn btn-primary" onclick="exportToChat()"><i class="ti ti-send" aria-hidden="true"></i> Exportar ↗</button>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input class="add-input" id="newNivel" placeholder="Nivel (ej. P06)" onkeydown="if(event.key==='Enter')addNivel()"/>
+    <button class="btn" onclick="addNivel()"><i class="ti ti-plus" aria-hidden="true"></i> Nivel</button>
+    <div class="divider"></div>
+    <input class="add-input" id="newSistema" placeholder="Sistema (ej. HID)" onkeydown="if(event.key==='Enter')addSistema()"/>
+    <button class="btn" onclick="addSistema()"><i class="ti ti-plus" aria-hidden="true"></i> Sistema</button>
+  </div>
+
+  <div class="matrix-wrap">
+    <table id="matrix" role="grid" aria-label="Matriz BIMBOX"></table>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#E8F5EE;border:.5px solid #9FE1CB"></div> Archivo gris (clic para ver ruta)</div>
+    <div class="leg"><div class="leg-dot" style="background:#D6E9F8;border:.5px solid #9FC7E8"></div> Master de Sistema / Nivel</div>
+    <div class="leg"><div class="leg-dot" style="background:#185FA5"></div> Master Master</div>
+  </div>
+</div>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <p class="modal-title" id="modal-title"></p>
+    <p class="modal-sub" id="modal-sub"></p>
+    <div class="modal-code" id="modal-code"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Estándar Miller & Co. — extraído de los videos
+let niveles = [
+  {cod:'FUND', label:'Fundaciones'},
+  {cod:'S05', label:'Sótano 5'},
+  {cod:'S04', label:'Sótano 4'},
+  {cod:'S03', label:'Sótano 3'},
+  {cod:'S02', label:'Sótano 2'},
+  {cod:'S01', label:'Sótano 1'},
+  {cod:'P00', label:'Planta Baja'},
+  {cod:'P01', label:'Piso 1'},
+  {cod:'P02', label:'Piso 2'},
+  {cod:'P03', label:'Piso 3'},
+  {cod:'P04', label:'Piso 4'}
+];
+
+let sistemas = [
+  {cod:'ARQ-EST', label:'Arquitectura + Estructura'},
+  {cod:'AA',     label:'Aire Acondicionado'},
+  {cod:'IL',     label:'Iluminación'},
+  {cod:'FM',     label:'Fuerza Motriz'},
+  {cod:'BT',     label:'Baja Tensión'},
+  {cod:'EL',     label:'Eléctrico'},
+  {cod:'GAS',    label:'Gas'},
+  {cod:'FP',     label:'Fire Protection'},
+  {cod:'AF-AC',  label:'Agua Fría / Agua Caliente'},
+  {cod:'CL',     label:'Cieloraso / Climatización'},
+  {cod:'MOB',    label:'Mobiliario'}
+];
+
+function render(){
+  const t = document.getElementById('matrix');
+  let html = '<thead><tr>';
+  html += '<th class="th-corner">NIV / SIS</th>';
+  sistemas.forEach((s,i)=>{
+    html += `<th class="th-sistema">${s.cod}<small>${s.label}</small><button class="del-btn" onclick="delSistema(${i})" title="Eliminar sistema">×</button></th>`;
+  });
+  html += '<th class="th-master-niveles">MASTER<br>NIVELES</th></tr></thead><tbody>';
+
+  niveles.forEach((n,i)=>{
+    html += `<tr><td class="th-nivel">${n.cod}<br><span style="font-size:8px;font-weight:400;color:var(--color-text-tertiary)">${n.label}</span><button class="del-btn" onclick="delNivel(${i})" title="Eliminar nivel">×</button></td>`;
+    sistemas.forEach(s=>{
+      const cn = s.cod+'-'+n.cod;
+      html += `<td class="cell-gray" onclick="showCell('${cn}','${s.cod}','${s.label}','${n.cod}','${n.label}')" title="${cn}.rvt"><span class="cell-name">${cn}</span></td>`;
+    });
+    html += `<td class="cell-master-nivel" onclick="showMasterNivel('${n.cod}','${n.label}')" title="Master Nivel ${n.cod}"><span class="cell-name">MST-NVL<br>${n.cod}</span></td></tr>`;
+  });
+
+  // Fila Master de Sistemas
+  html += '<tr class="row-master-sistemas"><td class="th-corner" style="font-size:8px;font-weight:700;color:#0C447C;letter-spacing:.04em;text-transform:uppercase">MASTER<br>SISTEMAS</td>';
+  sistemas.forEach(s=>{
+    html += `<td class="cell-master-sistema" onclick="showMasterSistema('${s.cod}','${s.label}')" title="Master Sistema ${s.cod}"><span class="cell-name">MST-SIS<br>${s.cod}</span></td>`;
+  });
+  html += '<td class="cell-master-master" onclick="showMasterMaster()" title="Master Master"><span class="cell-name">MASTER<br>MASTER</span></td></tr>';
+  html += `<tr class="row-doc"><td colspan="${sistemas.length+2}">DOCUMENTACIÓN EJECUTIVA</td></tr>`;
+  html += '</tbody>';
+  t.innerHTML = html;
+  renderStats();
+}
+
+function renderStats(){
+  const ag = niveles.length * sistemas.length;
+  const ms = sistemas.length;
+  const mn = niveles.length;
+  const total = ag + ms + mn + 1;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><span class="stat-n">${niveles.length}</span><span class="stat-l">Niveles</span></div>
+    <div class="stat"><span class="stat-n">${sistemas.length}</span><span class="stat-l">Sistemas</span></div>
+    <div class="stat"><span class="stat-n">${ag}</span><span class="stat-l">Archivos grises</span></div>
+    <div class="stat"><span class="stat-n">${ms+mn+1}</span><span class="stat-l">Masters</span></div>
+    <div class="stat"><span class="stat-n">${total}</span><span class="stat-l">Total archivos</span></div>`;
+}
+
+function showCell(cn,sc,sl,nc,nl){
+  document.getElementById('modal-title').textContent = cn+'.rvt — Archivo gris';
+  document.getElementById('modal-sub').textContent = sl+' · '+nl+'. Archivo independiente. Solo el responsable de esta intersección lo modifica.';
+  document.getElementById('modal-code').textContent =
+`📄 Archivo:  ${cn}.rvt
+📂 Ruta:     /${nc}/${sc}/${cn}.rvt
+
+🔗 Vinculado a:
+   MST-SIS-${sc}.rvt  (Master Sistema)
+   MST-NVL-${nc}.nwd  (Master Nivel)
+   MASTER-MASTER.rvt
+
+⚠️  REGLAS:
+   • No renombrar
+   • No "Guardar como"
+   • No enviar por email`;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function showMasterSistema(cod,label){
+  document.getElementById('modal-title').textContent = 'MST-SIS-'+cod+'.rvt — Master de Sistema';
+  document.getElementById('modal-sub').textContent = label+' · Vincula todos los niveles. Genera documentación ejecutiva.';
+  const links = niveles.map(n=>'   '+cod+'-'+n.cod+'.rvt').join('\n');
+  document.getElementById('modal-code').textContent =
+`📄 Archivo:  MST-SIS-${cod}.rvt
+📂 Ruta:     /MASTERS/SISTEMAS/MST-SIS-${cod}.rvt
+
+🔗 Vincula (${niveles.length} archivos grises):
+${links}
+
+📋 Genera: Láminas de documentación ejecutiva
+   → Planos por sistema · Vista completa vertical`;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function showMasterNivel(cod,label){
+  document.getElementById('modal-title').textContent = 'MST-NVL-'+cod+'.nwd — Master de Nivel';
+  document.getElementById('modal-sub').textContent = label+' · Vincula todos los sistemas del piso. Detección de interferencias.';
+  const links = sistemas.map(s=>'   '+s.cod+'-'+cod+'.rvt / .ifc / .dwf').join('\n');
+  document.getElementById('modal-code').textContent =
+`📄 Archivo:  MST-NVL-${cod}.nwd  (Navisworks)
+📂 Ruta:     /MASTERS/NIVELES/MST-NVL-${cod}.nwd
+
+🔗 Vincula (${sistemas.length} sistemas):
+${links}
+
+🔍 Genera: Coordinación 3D · Clash detection
+   → Vista completa horizontal del nivel`;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function showMasterMaster(){
+  document.getElementById('modal-title').textContent = 'MASTER-MASTER.rvt — Totalizador';
+  document.getElementById('modal-sub').textContent = '100% del proyecto. Solo lectura. Se actualiza automáticamente por retropropagación.';
+  document.getElementById('modal-code').textContent =
+`📄 Archivo:  MASTER-MASTER.rvt
+📂 Ruta:     /MASTERS/MASTER-MASTER.rvt
+
+🔗 Vincula todos los Masters de Sistemas:
+${sistemas.map(s=>'   MST-SIS-'+s.cod+'.rvt').join('\n')}
+
+👁  Instancias posibles:
+   • Ventas     → unidades / precios
+   • Legal      → planos municipales
+   • Construcción → avance de obra
+   
+⚠️  Solo lectura. Nunca se modifica directamente.`;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function showFileList(){
+  const ag = niveles.length*sistemas.length;
+  let list = '=== TEMPLATE BIMBOX® · Miller & Co. ===\n';
+  list += `${niveles.length} niveles · ${sistemas.length} sistemas · ${ag} archivos grises\n\n`;
+  list += '─── ARCHIVOS GRISES ─────────────────────\n';
+  niveles.forEach(n=>{
+    list += `\n📂 ${n.cod} — ${n.label}\n`;
+    sistemas.forEach(s=>{ list += `   📄 ${s.cod}-${n.cod}.rvt\n`; });
+  });
+  list += '\n─── MASTERS DE SISTEMAS ─────────────────\n';
+  sistemas.forEach(s=>{ list += `📄 MST-SIS-${s.cod}.rvt\n`; });
+  list += '\n─── MASTERS DE NIVELES ──────────────────\n';
+  niveles.forEach(n=>{ list += `📄 MST-NVL-${n.cod}.nwd\n`; });
+  list += '\n─── MASTER MASTER ───────────────────────\n📄 MASTER-MASTER.rvt\n';
+  list += `\nTOTAL: ${ag+sistemas.length+niveles.length+1} archivos`;
+  document.getElementById('modal-title').textContent = 'Lista completa de archivos';
+  document.getElementById('modal-sub').textContent = 'Estructura completa del template. Úsala para crear las carpetas en Dropbox / Windows Explorer.';
+  document.getElementById('modal-code').textContent = list;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function addNivel(){
+  const v = document.getElementById('newNivel').value.trim().toUpperCase();
+  if(!v||niveles.find(n=>n.cod===v))return;
+  niveles.push({cod:v,label:v});
+  document.getElementById('newNivel').value='';
+  render();
+}
+
+function addSistema(){
+  const v = document.getElementById('newSistema').value.trim().toUpperCase();
+  if(!v||sistemas.find(s=>s.cod===v))return;
+  sistemas.push({cod:v,label:v});
+  document.getElementById('newSistema').value='';
+  render();
+}
+
+function delNivel(i){niveles.splice(i,1);render();}
+function delSistema(i){sistemas.splice(i,1);render();}
+
+function closeModal(){document.getElementById('modal').classList.add('hidden');}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+function exportToChat(){
+  const ag=niveles.length*sistemas.length;
+  let msg='Matriz BIMBOX® · Estándar Miller & Co. lista:\n\n';
+  msg+='Niveles ('+niveles.length+'): '+niveles.map(n=>n.cod).join(', ')+'\n';
+  msg+='Sistemas ('+sistemas.length+'): '+sistemas.map(s=>s.cod+' ('+s.label+')').join(', ')+'\n\n';
+  msg+='Archivos grises: '+ag+'\n';
+  msg+='Masters de Sistema: '+sistemas.length+'\n';
+  msg+='Masters de Nivel: '+niveles.length+'\n';
+  msg+='Master Master: 1\n';
+  msg+='Total archivos: '+(ag+sistemas.length+niveles.length+1)+'\n\n';
+  msg+='¿Cuál es el siguiente paso?';
+  sendPrompt(msg);
+}
+
+render();
+</script>
