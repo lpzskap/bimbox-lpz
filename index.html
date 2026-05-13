@@ -7,706 +7,121 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:        #0A0B0D;
-  --bg2:       #111318;
-  --bg3:       #191C23;
-  --border:    #252830;
-  --border2:   #2E3340;
-  --amber:     #F5A623;
-  --amber-dim: #7A5212;
-  --blue:      #2B6CB0;
-  --blue-lt:   #63B3ED;
-  --blue-dim:  #1A3F6A;
-  --green:     #1D9E75;
-  --green-lt:  #68D391;
-  --green-dim: #0C4A35;
-  --text:      #E8EAF0;
-  --text2:     #8B909E;
-  --text3:     #4A4F5E;
-  --danger:    #E53E3E;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-ui:   'Barlow Condensed', sans-serif;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-mono);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* ── HEADER ────────────────────────────────── */
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.logo {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.logo-main {
-  font-family: var(--font-ui);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  color: var(--text);
-  line-height: 1;
-}
-
-.logo-main span {
-  color: var(--amber);
-}
-
-.logo-sub {
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  font-weight: 400;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 6px var(--green);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .4; }
-}
-
-.status-label {
-  font-size: 10px;
-  color: var(--text3);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-/* ── PROJECT BAR ───────────────────────────── */
-.project-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.project-bar::-webkit-scrollbar { display: none; }
-
-.proj-tab {
-  flex-shrink: 0;
-  padding: 5px 14px;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  font-weight: 500;
-  letter-spacing: .06em;
-  border: 1px solid var(--border2);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all .15s;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.proj-tab.active {
-  background: var(--amber);
-  color: var(--bg);
-  border-color: var(--amber);
-  font-weight: 700;
-}
-
-.proj-tab:hover:not(.active) {
-  border-color: var(--amber-dim);
-  color: var(--amber);
-}
-
-.proj-add {
-  flex-shrink: 0;
-  padding: 5px 10px;
-  font-size: 14px;
-  border: 1px dashed var(--border2);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--text3);
-  cursor: pointer;
-  transition: all .15s;
-}
-
-.proj-add:hover { border-color: var(--amber-dim); color: var(--amber); }
-
-/* ── TOOLBAR ───────────────────────────────── */
-.toolbar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.tb-input {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 5px 10px;
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 4px;
-  color: var(--text);
-  width: 110px;
-  outline: none;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
-
-.tb-input::placeholder { color: var(--text3); text-transform: none; }
-.tb-input:focus { border-color: var(--amber-dim); }
-
-.tb-btn {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  padding: 5px 12px;
-  border-radius: 4px;
-  border: 1px solid var(--border2);
-  background: transparent;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all .15s;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.tb-btn:hover { border-color: var(--amber-dim); color: var(--amber); }
-.tb-btn.primary { background: var(--amber); color: var(--bg); border-color: var(--amber); font-weight: 700; }
-.tb-btn.primary:hover { opacity: .88; }
-.tb-btn.danger { color: var(--danger); border-color: transparent; }
-.tb-btn.danger:hover { border-color: var(--danger); }
-
-.tb-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
-.tb-spacer { flex: 1; }
-
-/* ── STATS BAR ─────────────────────────────── */
-.stats-bar {
-  display: flex;
-  gap: 0;
-  padding: 0 16px;
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.stats-bar::-webkit-scrollbar { display: none; }
-
-.stat {
-  padding: 8px 16px 8px 0;
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-  flex-shrink: 0;
-}
-
-.stat-n {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--amber);
-  font-family: var(--font-ui);
-}
-
-.stat-l {
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-.stat + .stat {
-  padding-left: 16px;
-  border-left: 1px solid var(--border);
-}
-
-/* ── MATRIX WRAPPER ────────────────────────── */
-.matrix-scroll {
-  overflow: auto;
-  padding: 16px;
-  min-height: calc(100vh - 200px);
-}
-
-/* ── TABLE ─────────────────────────────────── */
-.matrix-table {
-  border-collapse: collapse;
-  font-size: 10px;
-  min-width: max-content;
-}
-
-.matrix-table th,
-.matrix-table td {
-  border: 1px solid var(--border);
-  text-align: center;
-  vertical-align: middle;
-}
-
-/* Corner */
-.th-corner {
-  background: var(--bg2);
-  color: var(--text3);
-  font-size: 8px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: 8px 6px;
-  min-width: 64px;
-  width: 64px;
-  font-weight: 400;
-}
-
-/* Sistema headers */
-.th-sistema {
-  background: var(--bg2);
-  padding: 7px 4px;
-  min-width: 74px;
-  width: 74px;
-  position: relative;
-  cursor: default;
-}
-
-.th-sistema-code {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: .06em;
-  line-height: 1.2;
-}
-
-.th-sistema-label {
-  display: block;
-  font-size: 7.5px;
-  color: var(--text3);
-  line-height: 1.3;
-  margin-top: 2px;
-  font-weight: 400;
-}
-
-/* Nivel headers */
-.th-nivel {
-  background: var(--bg2);
-  padding: 6px 8px;
-  min-width: 60px;
-  width: 60px;
-  position: relative;
-  cursor: default;
-}
-
-.th-nivel-code {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: .06em;
-}
-
-.th-nivel-label {
-  display: block;
-  font-size: 7px;
-  color: var(--text3);
-  font-weight: 400;
-  margin-top: 1px;
-}
-
-/* Delete buttons on hover */
-.del-btn {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 13px;
-  height: 13px;
-  border-radius: 2px;
-  background: rgba(229, 62, 62, .15);
-  color: var(--danger);
-  border: none;
-  cursor: pointer;
-  font-size: 9px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  line-height: 1;
-}
-
-.th-sistema:hover .del-btn,
-.th-nivel:hover .del-btn { display: flex; }
-
-/* Gray cells */
-.cell-gray {
-  background: var(--green-dim);
-  cursor: pointer;
-  padding: 6px 3px;
-  transition: background .12s;
-  position: relative;
-}
-
-.cell-gray:hover { background: #155A3F; }
-.cell-gray.has-link { background: #0C4A35; }
-.cell-gray.has-link:hover { background: #1D6B50; }
-
-.cell-code {
-  display: block;
-  font-size: 8.5px;
-  font-weight: 700;
-  color: var(--green-lt);
-  letter-spacing: .04em;
-  line-height: 1.3;
-}
-
-.cell-link-dot {
-  display: none;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--amber);
-  position: absolute;
-  top: 3px;
-  right: 3px;
-}
-
-.cell-gray.has-link .cell-link-dot { display: block; }
-
-/* Master Niveles header col */
-.th-master-niveles-header {
-  background: var(--blue-dim);
-  color: var(--blue-lt);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: 7px 4px;
-  min-width: 72px;
-  width: 72px;
-  line-height: 1.5;
-}
-
-/* Master Nivel cells */
-.cell-master-nivel {
-  background: var(--blue-dim);
-  padding: 6px 3px;
-  cursor: pointer;
-  transition: background .12s;
-}
-
-.cell-master-nivel:hover { background: #1E4F7E; }
-
-.cell-master-code {
-  display: block;
-  font-size: 8px;
-  font-weight: 700;
-  color: var(--blue-lt);
-  letter-spacing: .05em;
-  line-height: 1.4;
-}
-
-/* Master Sistemas row */
-.row-master-sistemas .th-label {
-  background: var(--bg2);
-  font-size: 8px;
-  font-weight: 700;
-  color: var(--blue-lt);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: 6px 4px;
-  line-height: 1.5;
-}
-
-.cell-master-sistema {
-  background: var(--blue-dim);
-  padding: 6px 3px;
-  cursor: pointer;
-  transition: background .12s;
-}
-
-.cell-master-sistema:hover { background: #1E4F7E; }
-
-/* Master Master */
-.cell-master-master {
-  background: var(--blue);
-  padding: 6px 3px;
-  cursor: pointer;
-  transition: background .12s;
-}
-
-.cell-master-master:hover { background: #2563A8; }
-
-.cell-master-master .cell-master-code {
-  color: #fff;
-  font-size: 8px;
-  font-weight: 700;
-}
-
-/* Doc row */
-.row-doc td {
-  background: var(--bg3);
-  font-size: 8px;
-  color: var(--text3);
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  padding: 8px;
-  border-top: 1px solid var(--border2);
-  font-weight: 600;
-}
-
-/* ── LEGEND ─────────────────────────────────── */
-.legend {
-  display: flex;
-  gap: 14px;
-  padding: 10px 16px;
-  border-top: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.leg {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-
-.leg-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-/* ── MODAL ──────────────────────────────────── */
-.modal-bg {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.7);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 200;
-  padding: 0;
-}
-
-@media(min-width:600px) {
-  .modal-bg { align-items: center; padding: 16px; }
-}
-
-.modal-box {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 12px 12px 0 0;
-  padding: 20px 16px 32px;
-  width: 100%;
-  max-width: 480px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-@media(min-width:600px) {
-  .modal-box { border-radius: 10px; padding: 20px; }
-}
-
-.modal-tag {
-  font-size: 9px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 4px;
-}
-
-.modal-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 4px;
-  letter-spacing: .04em;
-  word-break: break-all;
-}
-
-.modal-sub {
-  font-size: 11px;
-  color: var(--text2);
-  margin-bottom: 14px;
-  line-height: 1.55;
-  font-weight: 400;
-}
-
-.modal-code {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 12px;
-  font-size: 10px;
-  line-height: 1.9;
-  color: var(--text2);
-  white-space: pre-wrap;
-  word-break: break-all;
-  margin-bottom: 14px;
-}
-
-.modal-code .hl { color: var(--amber); font-weight: 600; }
-.modal-code .hl-b { color: var(--blue-lt); }
-.modal-code .hl-g { color: var(--green-lt); }
-
-.modal-section {
-  margin-bottom: 12px;
-}
-
-.modal-label {
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
-
-.modal-input {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  width: 100%;
-  padding: 8px 10px;
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 5px;
-  color: var(--text);
-  outline: none;
-}
-
-.modal-input:focus { border-color: var(--amber-dim); }
-
-.modal-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  margin-top: 4px;
-}
-
-.modal-link-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 12px;
-  background: var(--amber);
-  border: none;
-  border-radius: 6px;
-  color: var(--bg);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: none;
-  justify-content: center;
-  transition: opacity .15s;
-  margin-bottom: 8px;
-}
-
-.modal-link-btn:hover { opacity: .88; }
-.modal-link-btn.secondary { background: var(--bg3); color: var(--text2); border: 1px solid var(--border2); font-weight: 500; }
-
-.hidden { display: none !important; }
-
-/* ── DRAG & DROP ────────────────────────────── */
-.th-sistema[draggable="true"],
-.th-nivel[draggable="true"] { cursor: grab; }
-.th-sistema[draggable="true"]:active,
-.th-nivel[draggable="true"]:active { cursor: grabbing; }
-.drag-over-col { background: var(--amber-dim) !important; outline: 2px dashed var(--amber); outline-offset: -2px; }
-.drag-over-row { background: var(--amber-dim) !important; outline: 2px dashed var(--amber); outline-offset: -2px; }
-.drag-ghost { opacity: .35; }
-
-/* ── TOAST ──────────────────────────────────── */
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(60px);
-  background: var(--amber);
-  color: var(--bg);
-  padding: 8px 18px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
-  z-index: 300;
-  white-space: nowrap;
-}
-
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-/* ── FOOTER ─────────────────────────────────── */
-footer {
-  padding: 14px 16px;
-  border-top: 1px solid var(--border);
-  text-align: center;
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
+:root{--bg:#0A0B0D;--bg2:#111318;--bg3:#191C23;--border:#252830;--border2:#2E3340;--amber:#F5A623;--amber-dim:#7A5212;--blue:#2B6CB0;--blue-lt:#63B3ED;--blue-dim:#1A3F6A;--green:#1D9E75;--green-lt:#68D391;--green-dim:#0C4A35;--text:#E8EAF0;--text2:#8B909E;--text3:#4A4F5E;--danger:#E53E3E;--font-mono:'JetBrains Mono',monospace;--font-ui:'Barlow Condensed',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font-mono);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:50}
+.logo-main{font-family:var(--font-ui);font-size:20px;font-weight:700;letter-spacing:.12em;line-height:1}.logo-main span{color:var(--amber)}
+.logo-sub{font-size:8px;color:var(--text3);letter-spacing:.2em;text-transform:uppercase}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.status-label{font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.project-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border);background:var(--bg2);overflow-x:auto;scrollbar-width:none}
+.project-bar::-webkit-scrollbar{display:none}
+.proj-tab{flex-shrink:0;padding:5px 14px;font-size:11px;font-family:var(--font-mono);font-weight:500;letter-spacing:.06em;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--text2);cursor:pointer;transition:all .15s;text-transform:uppercase;white-space:nowrap}
+.proj-tab.active{background:var(--amber);color:var(--bg);border-color:var(--amber);font-weight:700}
+.proj-tab:hover:not(.active){border-color:var(--amber-dim);color:var(--amber)}
+.proj-add{flex-shrink:0;padding:5px 10px;font-size:14px;border:1px dashed var(--border2);border-radius:4px;background:transparent;color:var(--text3);cursor:pointer;transition:all .15s}
+.proj-add:hover{border-color:var(--amber-dim);color:var(--amber)}
+.mode-bar{display:flex;align-items:center;gap:0;padding:0 16px;border-bottom:1px solid var(--border);background:var(--bg2)}
+.mode-tab{padding:9px 20px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.mode-tab.active{color:var(--amber);border-bottom-color:var(--amber)}
+.mode-tab:hover:not(.active){color:var(--text2)}
+.mode-desc{font-size:10px;color:var(--text3);margin-left:auto;letter-spacing:.06em}
+.toolbar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.tb-input{font-family:var(--font-mono);font-size:11px;padding:5px 10px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);width:100px;outline:none;letter-spacing:.05em;text-transform:uppercase}
+.tb-input::placeholder{color:var(--text3);text-transform:none}
+.tb-input:focus{border-color:var(--amber-dim)}
+.tb-btn{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:5px 12px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s;text-transform:uppercase;white-space:nowrap}
+.tb-btn:hover{border-color:var(--amber-dim);color:var(--amber)}
+.tb-btn.primary{background:var(--amber);color:var(--bg);border-color:var(--amber);font-weight:700}
+.tb-btn.primary:hover{opacity:.88}
+.tb-divider{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.tb-spacer{flex:1}
+.stats-bar{display:flex;gap:0;padding:0 16px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.stats-bar::-webkit-scrollbar{display:none}
+.stat{padding:8px 16px 8px 0;display:flex;align-items:baseline;gap:5px;flex-shrink:0}
+.stat-n{font-size:17px;font-weight:700;color:var(--amber);font-family:var(--font-ui)}
+.stat-l{font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.stat+.stat{padding-left:16px;border-left:1px solid var(--border)}
+.matrix-scroll{overflow:auto;padding:16px;min-height:calc(100vh - 240px)}
+.matrix-table{border-collapse:collapse;font-size:10px;min-width:max-content}
+.matrix-table th,.matrix-table td{border:1px solid var(--border);text-align:center;vertical-align:middle}
+.th-corner{background:var(--bg2);color:var(--text3);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:8px 6px;min-width:60px;width:60px;font-weight:400}
+.th-sistema{background:var(--bg2);padding:7px 4px;min-width:70px;width:70px;position:relative;cursor:grab}
+.th-sistema-code{display:block;font-size:10px;font-weight:700;color:var(--text);letter-spacing:.06em;line-height:1.2}
+.th-sistema-label{display:block;font-size:7px;color:var(--text3);line-height:1.3;margin-top:2px;font-weight:400}
+.th-nivel{background:var(--bg2);padding:6px 8px;min-width:58px;width:58px;position:relative;cursor:grab}
+.th-nivel-code{display:block;font-size:11px;font-weight:700;color:var(--text);letter-spacing:.06em}
+.th-nivel-label{display:block;font-size:7px;color:var(--text3);font-weight:400;margin-top:1px}
+.del-btn{position:absolute;top:2px;right:2px;width:13px;height:13px;border-radius:2px;background:rgba(229,62,62,.15);color:var(--danger);border:none;cursor:pointer;font-size:9px;display:none;align-items:center;justify-content:center;padding:0;line-height:1}
+.th-sistema:hover .del-btn,.th-nivel:hover .del-btn{display:flex}
+.cell-gray{background:var(--green-dim);cursor:pointer;padding:6px 3px;transition:background .12s;position:relative}
+.cell-gray:hover{background:#155A3F}
+.cell-gray.has-link{background:#0C4A35}
+.cell-gray.has-link:hover{background:#1D6B50}
+.cell-code{display:block;font-size:8.5px;font-weight:700;color:var(--green-lt);letter-spacing:.04em;line-height:1.3}
+.cell-link-dot{display:none;width:5px;height:5px;border-radius:50%;background:var(--amber);position:absolute;top:3px;right:3px}
+.cell-gray.has-link .cell-link-dot{display:block}
+.th-master-header{background:var(--blue-dim);color:var(--blue-lt);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 4px;min-width:70px;width:70px;line-height:1.5}
+.cell-master-nivel{background:var(--blue-dim);padding:6px 3px;cursor:pointer;transition:background .12s}
+.cell-master-nivel:hover{background:#1E4F7E}
+.cell-master-code{display:block;font-size:8px;font-weight:700;color:var(--blue-lt);letter-spacing:.05em;line-height:1.4}
+.th-label-ms{background:var(--bg2);font-size:8px;font-weight:700;color:var(--blue-lt);letter-spacing:.08em;text-transform:uppercase;padding:6px 4px;line-height:1.5;border:1px solid var(--border);text-align:center}
+.cell-master-sistema{background:var(--blue-dim);padding:6px 3px;cursor:pointer;transition:background .12s}
+.cell-master-sistema:hover{background:#1E4F7E}
+.cell-master-master{background:var(--blue);padding:6px 3px;cursor:pointer;transition:background .12s}
+.cell-master-master:hover{background:#2563A8}
+.row-doc td{background:var(--bg3);font-size:8px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase;padding:8px;border-top:1px solid var(--border2);font-weight:600}
+.drag-over-col{background:var(--amber-dim)!important;outline:2px dashed var(--amber);outline-offset:-2px}
+.drag-over-row{background:var(--amber-dim)!important;outline:2px dashed var(--amber);outline-offset:-2px}
+.drag-ghost{opacity:.35}
+.legend{display:flex;gap:14px;padding:10px 16px;border-top:1px solid var(--border);flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.tree-panel{padding:16px;overflow:auto;min-height:calc(100vh - 240px)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center;z-index:200;padding:0}
+@media(min-width:600px){.modal-bg{align-items:center;padding:16px}}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:12px 12px 0 0;padding:20px 16px 32px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+@media(min-width:600px){.modal-box{border-radius:10px;padding:20px}}
+.modal-tag{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
+.modal-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:.04em;word-break:break-all}
+.modal-sub{font-size:11px;color:var(--text2);margin-bottom:14px;line-height:1.55}
+.modal-code{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:12px;font-size:10px;line-height:1.9;color:var(--text2);white-space:pre-wrap;word-break:break-all;margin-bottom:14px;max-height:200px;overflow-y:auto}
+.modal-code .hl{color:var(--amber);font-weight:600}.modal-code .hl-b{color:var(--blue-lt)}.modal-code .hl-g{color:var(--green-lt)}
+.modal-section{margin-bottom:12px}
+.modal-label{font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;font-weight:600}
+.modal-input{font-family:var(--font-mono);font-size:11px;width:100%;padding:8px 10px;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;color:var(--text);outline:none}
+.modal-input:focus{border-color:var(--amber-dim)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px;flex-wrap:wrap}
+.modal-open-btn{display:flex;align-items:center;gap:8px;width:100%;padding:10px 12px;background:var(--amber);border:none;border-radius:6px;color:var(--bg);font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:none;justify-content:center;transition:opacity .15s;margin-bottom:8px}
+.modal-open-btn:hover{opacity:.88}
+.hidden{display:none!important}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--amber);color:var(--bg);padding:8px 18px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;transition:transform .25s cubic-bezier(.34,1.56,.64,1);z-index:300;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+footer{padding:12px 16px;border-top:1px solid var(--border);text-align:center;font-size:9px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase}
 </style>
 </head>
 <body>
-
-<!-- HEADER -->
 <header>
-  <div class="logo">
-    <span class="logo-main">BIM<span>BOX</span> LPZ</span>
-    <span class="logo-sub">Optimizador de proyectos BIM</span>
+  <div>
+    <div class="logo-main">BIM<span>BOX</span> LPZ</div>
+    <div class="logo-sub">Optimizador de proyectos BIM · Miller & Co. Standard</div>
   </div>
-  <div class="header-right">
+  <div style="display:flex;align-items:center;gap:8px">
     <div class="status-dot"></div>
     <span class="status-label">Activo</span>
   </div>
 </header>
-
-<!-- PROJECT TABS -->
-<div class="project-bar" id="projectBar">
-  <!-- rendered by JS -->
+<div class="project-bar" id="projectBar"></div>
+<div class="mode-bar">
+  <button class="mode-tab" id="tabMODEL" onclick="setMode('MODEL')">MODEL</button>
+  <button class="mode-tab" id="tabCOORD" onclick="setMode('COORD')">COORD</button>
+  <button class="mode-tab" id="tabINFO" onclick="setMode('INFO')">Estructura</button>
+  <span class="mode-desc" id="modeDesc"></span>
 </div>
-
-<!-- TOOLBAR -->
 <div class="toolbar">
-  <input class="tb-input" id="newNivel" placeholder="Nivel (P06)" maxlength="8" onkeydown="if(event.key==='Enter')addNivel()">
+  <input class="tb-input" id="newNivel" placeholder="Nivel (P06)" maxlength="12" onkeydown="if(event.key==='Enter')addNivel()">
   <button class="tb-btn" onclick="addNivel()">+ Nivel</button>
   <div class="tb-divider"></div>
   <input class="tb-input" id="newSistema" placeholder="Sistema (HID)" maxlength="10" onkeydown="if(event.key==='Enter')addSistema()">
@@ -714,444 +129,268 @@ footer {
   <div class="tb-spacer"></div>
   <button class="tb-btn primary" onclick="showFileList()">Ver archivos</button>
 </div>
-
-<!-- STATS -->
 <div class="stats-bar" id="statsBar"></div>
-
-<!-- MATRIX -->
-<div class="matrix-scroll">
-  <table class="matrix-table" id="matrix" role="grid" aria-label="Matriz BIMBOX"></table>
+<div class="matrix-scroll hidden" id="matrixScroll">
+  <table class="matrix-table" id="matrix" role="grid"></table>
 </div>
-
-<!-- LEGEND -->
+<div class="tree-panel hidden" id="treePanel"></div>
 <div class="legend">
-  <div class="leg"><div class="leg-dot" style="background:var(--green-dim);border:1px solid var(--green)"></div>Archivo gris</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--green-dim);border:1px solid var(--green)"></div>Archivo gris (.rvt)</div>
   <div class="leg"><div class="leg-dot" style="background:var(--green-dim);border:1px solid var(--amber)"></div>Con enlace ↗</div>
   <div class="leg"><div class="leg-dot" style="background:var(--blue-dim);border:1px solid var(--blue-lt)"></div>Master</div>
   <div class="leg"><div class="leg-dot" style="background:var(--blue)"></div>Master Master</div>
 </div>
-
-<!-- FOOTER -->
-<footer>© 2026 · Leandro Lopez · Catania, IT · Miller & Co. Standard</footer>
-
-<!-- MODAL -->
+<footer>© 2026 · Leandro Lopez · Catania, IT · Miller & Co. · Protocolo CAD/BIM</footer>
 <div class="modal-bg hidden" id="modal">
-  <div class="modal-box" id="modalBox">
+  <div class="modal-box">
     <p class="modal-tag" id="modalTag"></p>
     <p class="modal-title" id="modalTitle"></p>
     <p class="modal-sub" id="modalSub"></p>
     <div class="modal-code" id="modalCode"></div>
     <div id="modalLinkSection" class="modal-section">
-      <p class="modal-label">Enlace (Autodesk, Dropbox, Drive…)</p>
+      <p class="modal-label">Enlace (Google Drive, Autodesk…)</p>
       <input class="modal-input" id="modalLinkInput" placeholder="https://..." type="url">
     </div>
     <div class="modal-actions" id="modalActions"></div>
   </div>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
-
 <script>
-// ── STATE ────────────────────────────────────
-const DEFAULT_NIVELES = [
-  {cod:'FUND', label:'Fundaciones'},
-  {cod:'S05',  label:'Sótano 5'},
-  {cod:'S04',  label:'Sótano 4'},
-  {cod:'S03',  label:'Sótano 3'},
-  {cod:'S02',  label:'Sótano 2'},
-  {cod:'S01',  label:'Sótano 1'},
-  {cod:'P00',  label:'Planta Baja'},
-  {cod:'P01',  label:'Piso 1'},
-  {cod:'P02',  label:'Piso 2'},
-  {cod:'P03',  label:'Piso 3'},
-  {cod:'P04',  label:'Piso 4'}
+const MILLER_SISTEMAS=[
+  {cod:'ARQ',label:'Arquitectura'},
+  {cod:'EST',label:'Estructura Hormigón'},
+  {cod:'ESM',label:'Estructura Metálica'},
+  {cod:'CUW',label:'Curtain Wall'},
+  {cod:'AFC',label:'Agua Fría y Caliente'},
+  {cod:'CMA',label:'Climatización'},
+  {cod:'ELE',label:'Inst. Eléctricas'},
+  {cod:'ILU',label:'Iluminación'},
+  {cod:'FMO',label:'Fuerza Motriz'},
+  {cod:'FPT',label:'Prot. Incendio'},
+  {cod:'GAS',label:'Gas'},
+  {cod:'SAN',label:'Sanitarias'},
+  {cod:'BTE',label:'Corrientes Débiles'},
+  {cod:'SEN',label:'Señalización'},
+  {cod:'ENT',label:'Entorno/Terreno'},
+  {cod:'RCP',label:'Cielorrasos'},
+  {cod:'MOB',label:'Mobiliario'},
+  {cod:'REL',label:'Relevamientos'}
 ];
-
-const DEFAULT_SISTEMAS = [
-  {cod:'ARQ-EST', label:'Arquitectura + Estructura'},
-  {cod:'AA',      label:'Aire Acondicionado'},
-  {cod:'IL',      label:'Iluminación'},
-  {cod:'FM',      label:'Fuerza Motriz'},
-  {cod:'BT',      label:'Baja Tensión'},
-  {cod:'EL',      label:'Eléctrico'},
-  {cod:'GAS',     label:'Gas'},
-  {cod:'FP',      label:'Fire Protection'},
-  {cod:'AF-AC',   label:'Agua Fría / Agua Caliente'},
-  {cod:'CL',      label:'Cieloraso'},
-  {cod:'MOB',     label:'Mobiliario'}
+const MILLER_NIVELES=[
+  {cod:'FUND',label:'Fundaciones'},
+  {cod:'S04',label:'Sótano 4'},
+  {cod:'S03',label:'Sótano 3'},
+  {cod:'S02',label:'Sótano 2'},
+  {cod:'S01',label:'Sótano 1'},
+  {cod:'P00',label:'Planta Baja'},
+  {cod:'P01',label:'Piso 1'},
+  {cod:'P02',label:'Piso 2'},
+  {cod:'P03',label:'Piso 3'},
+  {cod:'P04',label:'Piso 4'},
+  {cod:'PLANTA-TIPO',label:'Planta Tipo'}
 ];
-
-function loadState() {
-  try {
-    const s = localStorage.getItem('bimbox_state');
-    if (s) return JSON.parse(s);
-  } catch(e) {}
-  return {
-    projects: [{id: 'TEMPLATE', name: 'TEMPLATE BASE', niveles: JSON.parse(JSON.stringify(DEFAULT_NIVELES)), sistemas: JSON.parse(JSON.stringify(DEFAULT_SISTEMAS))}],
-    activeProject: 0,
-    links: {}
-  };
+function loadState(){
+  try{const s=localStorage.getItem('bimbox_v3');if(s)return JSON.parse(s);}catch(e){}
+  return{projects:[{id:'TEMPLATE',name:'TEMPLATE BASE',niveles:JSON.parse(JSON.stringify(MILLER_NIVELES)),sistemas:JSON.parse(JSON.stringify(MILLER_SISTEMAS))}],activeProject:0,mode:'MODEL',links:{}};
 }
+function saveState(){try{localStorage.setItem('bimbox_v3',JSON.stringify(STATE));}catch(e){}}
+let STATE=loadState();
+function proj(){return STATE.projects[STATE.activeProject]}
+function lk(c){return STATE.links[(proj().id+'::'+STATE.mode+'::'+c)]||''}
+function setLk(c,u){const k=proj().id+'::'+STATE.mode+'::'+c;if(u)STATE.links[k]=u;else delete STATE.links[k];saveState()}
 
-function saveState() {
-  try { localStorage.setItem('bimbox_state', JSON.stringify(STATE)); } catch(e) {}
-}
+const DESCS={MODEL:'MODEL · Archivos grises (.rvt) · Documentación ejecutiva',COORD:'COORD · Masters de Nivel (.nwd) · Coordinación 3D · Clash detection',INFO:'Árbol de carpetas · Estándar Miller & Co.'};
 
-let STATE = loadState();
-
-function proj() { return STATE.projects[STATE.activeProject]; }
-function linkKey(projId, cellCode) { return projId+'::'+cellCode; }
-function getLink(cellCode) { return STATE.links[linkKey(proj().id, cellCode)] || ''; }
-function setLink(cellCode, url) {
-  if (url) STATE.links[linkKey(proj().id, cellCode)] = url;
-  else delete STATE.links[linkKey(proj().id, cellCode)];
-  saveState();
-}
-
-// ── RENDER ───────────────────────────────────
-function render() {
-  renderProjects();
-  renderMatrix();
+function setMode(m){
+  STATE.mode=m;saveState();
+  ['MODEL','COORD','INFO'].forEach(t=>{document.getElementById('tab'+t).classList.toggle('active',t===m)});
+  document.getElementById('modeDesc').textContent=DESCS[m]||'';
+  document.getElementById('matrixScroll').classList.toggle('hidden',m==='INFO');
+  document.getElementById('treePanel').classList.toggle('hidden',m!=='INFO');
+  if(m==='INFO')renderTree();else renderMatrix();
   renderStats();
 }
 
-function renderProjects() {
-  const bar = document.getElementById('projectBar');
-  let html = '';
-  STATE.projects.forEach((p, i) => {
-    html += `<button class="proj-tab${i===STATE.activeProject?' active':''}" onclick="switchProject(${i})">${p.name}</button>`;
-  });
-  html += `<button class="proj-add" onclick="addProject()" title="Nuevo proyecto">＋</button>`;
-  bar.innerHTML = html;
+function render(){renderProjects();setMode(STATE.mode)}
+
+function renderProjects(){
+  const bar=document.getElementById('projectBar');
+  let h='';
+  STATE.projects.forEach((p,i)=>{h+=`<button class="proj-tab${i===STATE.activeProject?' active':''}" onclick="switchProject(${i})">${p.name}</button>`});
+  h+=`<button class="proj-add" onclick="addProject()">＋</button>`;
+  bar.innerHTML=h;
 }
 
-function renderMatrix() {
-  const p = proj();
-  const t = document.getElementById('matrix');
-  let html = '<thead><tr>';
-  html += '<th class="th-corner">NIV↓ SIS→</th>';
-  p.sistemas.forEach((s, i) => {
-    html += `<th class="th-sistema" draggable="true" data-sis-idx="${i}"
-      ondragstart="dragSisStart(event,${i})"
-      ondragover="dragSisOver(event,${i})"
-      ondragleave="dragSisLeave(event)"
-      ondrop="dropSis(event,${i})">
-      <span class="th-sistema-code">${s.cod}</span>
-      <span class="th-sistema-label">${s.label}</span>
-      <button class="del-btn" onclick="delSistema(${i})" title="Eliminar">×</button>
-    </th>`;
+function renderMatrix(){
+  const p=proj();const isC=STATE.mode==='COORD';
+  const t=document.getElementById('matrix');
+  let h=`<thead><tr><th class="th-corner">${isC?'COORD':'MODEL'}<br><span style="font-size:7px;font-weight:400">NIV↓ SIS→</span></th>`;
+  p.sistemas.forEach((s,i)=>{
+    h+=`<th class="th-sistema" draggable="true" data-sis-idx="${i}" ondragstart="dSS(event,${i})" ondragover="dSO(event,${i})" ondragleave="dSL()" ondrop="dSD(event,${i})">
+      <span class="th-sistema-code">${s.cod}</span><span class="th-sistema-label">${s.label}</span>
+      <button class="del-btn" onclick="delSistema(${i})">×</button></th>`;
   });
-  html += '<th class="th-master-niveles-header">MASTER<br>NIVELES</th></tr></thead><tbody>';
-
-  p.niveles.forEach((n, i) => {
-    html += `<tr>
-      <td class="th-nivel" draggable="true" data-nvl-idx="${i}"
-        ondragstart="dragNvlStart(event,${i})"
-        ondragover="dragNvlOver(event,${i})"
-        ondragleave="dragNvlLeave(event)"
-        ondrop="dropNvl(event,${i})">
-        <span class="th-nivel-code">${n.cod}</span>
-        <span class="th-nivel-label">${n.label}</span>
-        <button class="del-btn" onclick="delNivel(${i})" title="Eliminar">×</button>
-      </td>`;
-    p.sistemas.forEach(s => {
-      const cn = s.cod+'-'+n.cod;
-      const lnk = getLink(cn);
-      html += `<td class="cell-gray${lnk?' has-link':''}" onclick="showCell('${cn}','${s.cod}','${s.label}','${n.cod}','${n.label}')" title="${cn}">
-        <span class="cell-code">${cn}</span>
-        <div class="cell-link-dot"></div>
-      </td>`;
+  h+=`<th class="th-master-header">MASTER<br>${isC?'PISO':'NIVELES'}</th></tr></thead><tbody>`;
+  p.niveles.forEach((n,i)=>{
+    h+=`<tr><td class="th-nivel" draggable="true" data-nvl-idx="${i}" ondragstart="dNS(event,${i})" ondragover="dNO(event,${i})" ondragleave="dNL()" ondrop="dND(event,${i})">
+      <span class="th-nivel-code">${n.cod}</span><span class="th-nivel-label">${n.label}</span>
+      <button class="del-btn" onclick="delNivel(${i})">×</button></td>`;
+    p.sistemas.forEach(s=>{
+      const cn=isC?`COORD-${s.cod}-${n.cod}`:`${s.cod}-${n.cod}`;
+      const hl=!!lk(cn);
+      h+=`<td class="cell-gray${hl?' has-link':''}" onclick="showCell('${cn}','${s.cod}','${s.label}','${n.cod}','${n.label}')" title="${cn}">
+        <span class="cell-code">${cn}</span><div class="cell-link-dot"></div></td>`;
     });
-    html += `<td class="cell-master-nivel" onclick="showMasterNivel('${n.cod}','${n.label}')">
-      <span class="cell-master-code">MST-NVL<br>${n.cod}</span>
-    </td></tr>`;
+    h+=`<td class="cell-master-nivel" onclick="showMNivel('${n.cod}','${n.label}','${isC}')">
+      <span class="cell-master-code">${isC?'MST-PISO':'MST-NVL'}<br>${n.cod}</span></td></tr>`;
   });
-
-  // Master Sistemas row
-  html += `<tr class="row-master-sistemas">
-    <td class="th-label" style="background:var(--bg2);font-size:8px;font-weight:700;color:var(--blue-lt);letter-spacing:.08em;text-transform:uppercase;padding:6px 4px;text-align:center;line-height:1.5;border:1px solid var(--border)">MASTER<br>SISTEMAS</td>`;
-  p.sistemas.forEach(s => {
-    html += `<td class="cell-master-sistema" onclick="showMasterSistema('${s.cod}','${s.label}')">
-      <span class="cell-master-code">MST-SIS<br>${s.cod}</span>
-    </td>`;
-  });
-  html += `<td class="cell-master-master" onclick="showMasterMaster()">
-    <span class="cell-master-code" style="color:#fff;font-size:8px;font-weight:700">MASTER<br>MASTER</span>
-  </td></tr>`;
-
-  html += `<tr class="row-doc"><td colspan="${p.sistemas.length+2}">DOCUMENTACIÓN EJECUTIVA</td></tr>`;
-  html += '</tbody>';
-  t.innerHTML = html;
+  h+=`<tr><td class="th-label-ms">MASTER<br>SISTEMAS</td>`;
+  p.sistemas.forEach(s=>{h+=`<td class="cell-master-sistema" onclick="showMSis('${s.cod}','${s.label}')"><span class="cell-master-code">MST-SIS<br>${s.cod}</span></td>`});
+  h+=`<td class="cell-master-master" onclick="showMM()"><span class="cell-master-code" style="color:#fff;font-weight:700">MASTER<br>MASTER</span></td></tr>`;
+  h+=`<tr class="row-doc"><td colspan="${p.sistemas.length+2}">DOCUMENTACIÓN EJECUTIVA</td></tr></tbody>`;
+  t.innerHTML=h;
 }
 
-function renderStats() {
-  const p = proj();
-  const ag = p.niveles.length * p.sistemas.length;
-  const ms = p.sistemas.length;
-  const mn = p.niveles.length;
-  document.getElementById('statsBar').innerHTML = `
+function renderStats(){
+  const p=proj();const ag=p.niveles.length*p.sistemas.length;
+  const linked=Object.keys(STATE.links).filter(k=>k.startsWith(p.id+'::'+STATE.mode+'::')).length;
+  document.getElementById('statsBar').innerHTML=`
     <div class="stat"><span class="stat-n">${p.niveles.length}</span><span class="stat-l">Niveles</span></div>
     <div class="stat"><span class="stat-n">${p.sistemas.length}</span><span class="stat-l">Sistemas</span></div>
-    <div class="stat"><span class="stat-n">${ag}</span><span class="stat-l">Archivos grises</span></div>
-    <div class="stat"><span class="stat-n">${ms+mn+1}</span><span class="stat-l">Masters</span></div>
-    <div class="stat"><span class="stat-n">${ag+ms+mn+1}</span><span class="stat-l">Total</span></div>`;
+    <div class="stat"><span class="stat-n">${ag}</span><span class="stat-l">Archivos</span></div>
+    <div class="stat"><span class="stat-n">${p.sistemas.length+p.niveles.length+1}</span><span class="stat-l">Masters</span></div>
+    <div class="stat"><span class="stat-n" style="color:var(--amber)">${linked}</span><span class="stat-l" style="color:var(--amber)">Enlazados ●</span></div>`;
 }
 
-// ── PROJECTS ─────────────────────────────────
-function switchProject(i) {
-  STATE.activeProject = i;
-  saveState();
-  render();
-}
-
-function addProject() {
-  const name = prompt('Nombre del proyecto (ej. RESIDENCIAL-001):');
-  if (!name) return;
-  const id = name.toUpperCase().replace(/\s+/g,'-');
-  STATE.projects.push({
-    id, name: name.toUpperCase(),
-    niveles: JSON.parse(JSON.stringify(DEFAULT_NIVELES)),
-    sistemas: JSON.parse(JSON.stringify(DEFAULT_SISTEMAS))
+function renderTree(){
+  const p=proj();
+  let h=`<div style="font-family:var(--font-mono);font-size:11px;line-height:2;color:var(--text2)">`;
+  h+=`<div style="color:var(--amber);font-weight:700;font-size:13px;margin-bottom:12px">📁 ${p.name}</div>`;
+  h+=`<div style="margin-left:8px">`;
+  h+=`<div>📂 <b style="color:var(--amber)">INFO/</b></div>`;
+  h+=`<div style="margin-left:20px;color:var(--text3);font-size:10px">📂 DWG/ &nbsp; 📂 ASESOR-1/ &nbsp; 📂 ASESOR-2/</div>`;
+  h+=`<div>📂 <b style="color:var(--amber)">BMO/</b></div>`;
+  h+=`<div style="margin-left:20px">📂 PROJECT/ &nbsp; 📂 <b style="color:var(--amber)">SECTOR-01/</b></div>`;
+  h+=`<div style="margin-left:40px">`;
+  h+=`<div>📂 <b style="color:var(--blue-lt)">COORD/</b> <span style="color:var(--text3);font-size:9px">→ Coordinación 3D / Clash detection</span></div>`;
+  h+=`<div style="margin-left:20px;color:var(--blue-lt);font-size:9px">📄 MASTER-MASTER &nbsp; 📄 MASTER-PISO &nbsp; 📄 MASTER-SISTEMAS &nbsp; 📂 SISTEMAS/</div>`;
+  h+=`<div>📂 <span style="color:var(--text3)">DRAFT/</span></div>`;
+  h+=`<div>📂 <span style="color:var(--text3)">GEO/</span></div>`;
+  h+=`<div>📂 <b style="color:var(--green-lt)">MODEL/</b> <span style="color:var(--text3);font-size:9px">→ Documentación ejecutiva</span></div>`;
+  h+=`<div style="margin-left:20px">`;
+  ['DATA','EXPEDIENTES','MAIN-DATUM','SD','VISTAS Y CORTES','DETALLES'].forEach(f=>{h+=`<div>📂 <span style="color:var(--text3)">${f}/</span></div>`});
+  h+=`<div>📂 <b style="color:var(--blue-lt)">MASTER-MASTER/</b> &nbsp; <b style="color:var(--blue-lt)">MASTER-PISO/</b> &nbsp; <b style="color:var(--blue-lt)">MASTER-SISTEMAS/</b></div>`;
+  h+=`<div>📂 <b style="color:var(--green-lt)">SISTEMAS/</b></div>`;
+  h+=`<div style="margin-left:20px">`;
+  p.sistemas.forEach(s=>{
+    h+=`<div>📂 <b style="color:var(--green-lt)">${s.cod}/</b> <span style="color:var(--text3);font-size:9px">${s.label}</span></div>`;
+    h+=`<div style="margin-left:20px;font-size:9px;color:var(--text3)">`;
+    p.niveles.forEach(n=>{
+      const hl=!!lk(`${s.cod}-${n.cod}`);
+      h+=`<span style="${hl?'color:var(--amber)':''}">📄 ${s.cod}-${n.cod}.rvt${hl?' ●':''} &nbsp;</span>`;
+    });
+    h+=`</div>`;
   });
-  STATE.activeProject = STATE.projects.length - 1;
-  saveState();
-  render();
+  h+=`</div></div></div></div></div>`;
+  h+=`<div style="margin-top:8px">📂 <b style="color:var(--amber)">PRESENTACION/</b></div>`;
+  h+=`<div>📂 <b style="color:var(--amber)">BOTONERA/</b></div>`;
+  h+=`</div>`;
+  document.getElementById('treePanel').innerHTML=h;
 }
 
-// ── ADD / DELETE ──────────────────────────────
-function addNivel() {
-  const v = document.getElementById('newNivel').value.trim().toUpperCase();
-  if (!v || proj().niveles.find(n=>n.cod===v)) return;
-  proj().niveles.push({cod:v, label:v});
-  document.getElementById('newNivel').value = '';
-  saveState(); render();
+function switchProject(i){STATE.activeProject=i;saveState();render()}
+function addProject(){
+  const name=prompt('Nombre del proyecto:');if(!name)return;
+  const id=name.toUpperCase().replace(/\s+/g,'-');
+  STATE.projects.push({id,name:name.toUpperCase(),niveles:JSON.parse(JSON.stringify(MILLER_NIVELES)),sistemas:JSON.parse(JSON.stringify(MILLER_SISTEMAS))});
+  STATE.activeProject=STATE.projects.length-1;saveState();render();
 }
+function addNivel(){const v=document.getElementById('newNivel').value.trim().toUpperCase();if(!v||proj().niveles.find(n=>n.cod===v))return;proj().niveles.push({cod:v,label:v});document.getElementById('newNivel').value='';saveState();render()}
+function addSistema(){const v=document.getElementById('newSistema').value.trim().toUpperCase();if(!v||proj().sistemas.find(s=>s.cod===v))return;proj().sistemas.push({cod:v,label:v});document.getElementById('newSistema').value='';saveState();render()}
+function delNivel(i){if(!confirm('¿Eliminar '+proj().niveles[i].cod+'?'))return;proj().niveles.splice(i,1);saveState();render()}
+function delSistema(i){if(!confirm('¿Eliminar '+proj().sistemas[i].cod+'?'))return;proj().sistemas.splice(i,1);saveState();render()}
 
-function addSistema() {
-  const v = document.getElementById('newSistema').value.trim().toUpperCase();
-  if (!v || proj().sistemas.find(s=>s.cod===v)) return;
-  proj().sistemas.push({cod:v, label:v});
-  document.getElementById('newSistema').value = '';
-  saveState(); render();
-}
+let _dS=null,_dN=null;
+function dSS(e,i){_dS=i;e.dataTransfer.effectAllowed='move';setTimeout(()=>{const el=document.querySelector(`[data-sis-idx="${i}"]`);if(el)el.classList.add('drag-ghost')},0)}
+function dSO(e,i){e.preventDefault();document.querySelectorAll('.drag-over-col').forEach(el=>el.classList.remove('drag-over-col'));document.querySelectorAll(`[data-sis-idx="${i}"]`).forEach(el=>el.classList.add('drag-over-col'))}
+function dSL(){document.querySelectorAll('.drag-over-col').forEach(el=>el.classList.remove('drag-over-col'))}
+function dSD(e,to){e.preventDefault();if(_dS===null||_dS===to){cleanD();return}const a=proj().sistemas;const[m]=a.splice(_dS,1);a.splice(to,0,m);saveState();render();cleanD();showToast('Sistema reordenado')}
+function dNS(e,i){_dN=i;e.dataTransfer.effectAllowed='move';setTimeout(()=>{const el=document.querySelector(`[data-nvl-idx="${i}"]`);if(el)el.classList.add('drag-ghost')},0)}
+function dNO(e,i){e.preventDefault();document.querySelectorAll('.drag-over-row').forEach(el=>el.classList.remove('drag-over-row'));const el=document.querySelector(`[data-nvl-idx="${i}"]`);if(el)el.classList.add('drag-over-row')}
+function dNL(){document.querySelectorAll('.drag-over-row').forEach(el=>el.classList.remove('drag-over-row'))}
+function dND(e,to){e.preventDefault();if(_dN===null||_dN===to){cleanD();return}const a=proj().niveles;const[m]=a.splice(_dN,1);a.splice(to,0,m);saveState();render();cleanD();showToast('Nivel reordenado')}
+function cleanD(){_dS=null;_dN=null;document.querySelectorAll('.drag-over-col,.drag-over-row,.drag-ghost').forEach(el=>el.classList.remove('drag-over-col','drag-over-row','drag-ghost'))}
 
-function delNivel(i) {
-  if (!confirm('¿Eliminar nivel '+proj().niveles[i].cod+'?')) return;
-  proj().niveles.splice(i,1);
-  saveState(); render();
-}
-
-function delSistema(i) {
-  if (!confirm('¿Eliminar sistema '+proj().sistemas[i].cod+'?')) return;
-  proj().sistemas.splice(i,1);
-  saveState(); render();
-}
-
-// ── MODAL ────────────────────────────────────
-let _modalCellCode = null;
-
-function openModal(tag, title, sub, codeHtml, showLinkInput, cellCode) {
-  document.getElementById('modalTag').textContent = tag;
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalSub').textContent = sub;
-  document.getElementById('modalCode').innerHTML = codeHtml;
-  _modalCellCode = cellCode || null;
-
-  const linkSection = document.getElementById('modalLinkSection');
-  const linkInput = document.getElementById('modalLinkInput');
-
-  if (showLinkInput && cellCode) {
-    linkSection.classList.remove('hidden');
-    linkInput.value = getLink(cellCode);
-  } else {
-    linkSection.classList.add('hidden');
+let _cc=null;
+function openModal(tag,title,sub,code,showLink,cellCode){
+  document.getElementById('modalTag').textContent=tag;
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalSub').textContent=sub;
+  document.getElementById('modalCode').innerHTML=code;
+  _cc=cellCode||null;
+  const ls=document.getElementById('modalLinkSection');
+  const li=document.getElementById('modalLinkInput');
+  if(showLink&&cellCode){ls.classList.remove('hidden');li.value=lk(cellCode)}else ls.classList.add('hidden');
+  const acts=document.getElementById('modalActions');
+  let btns='';
+  if(showLink&&cellCode){
+    const u=lk(cellCode);
+    if(u)btns+=`<a class="modal-open-btn" href="${u}" target="_blank" rel="noopener">Abrir en Drive ↗</a>`;
+    btns+=`<button class="tb-btn primary" onclick="saveLink()">Guardar enlace</button>`;
   }
-
-  const actions = document.getElementById('modalActions');
-  let btns = '';
-  if (showLinkInput && cellCode) {
-    const lnk = getLink(cellCode);
-    if (lnk) {
-      btns += `<a class="modal-link-btn" href="${lnk}" target="_blank" rel="noopener">Abrir archivo ↗</a>`;
-    }
-    btns += `<button class="tb-btn primary" onclick="saveLink()">Guardar enlace</button>`;
-    btns += `<button class="tb-btn" onclick="closeModal()">Cerrar</button>`;
-  } else {
-    btns = `<button class="tb-btn" onclick="closeModal()">Cerrar</button>`;
-  }
-  actions.innerHTML = btns;
-
+  btns+=`<button class="tb-btn" onclick="closeModal()">Cerrar</button>`;
+  acts.innerHTML=btns;
   document.getElementById('modal').classList.remove('hidden');
 }
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
+function saveLink(){const u=document.getElementById('modalLinkInput').value.trim();if(_cc){setLk(_cc,u);render();showToast('Enlace guardado');closeModal()}}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 
-function closeModal() { document.getElementById('modal').classList.add('hidden'); }
-
-function saveLink() {
-  const url = document.getElementById('modalLinkInput').value.trim();
-  if (_modalCellCode) {
-    setLink(_modalCellCode, url);
-    render();
-    showToast('Enlace guardado');
-    closeModal();
-  }
+function showCell(cn,sc,sl,nc,nl){
+  const isC=STATE.mode==='COORD';const ext=isC?'.nwd':'.rvt';
+  const u=lk(cn);
+  openModal((isC?'COORD':'MODEL')+' · '+proj().name,cn+ext,
+    sl+' · '+nl+(isC?' — Coordinación / Clash detection':' — Archivo gris. Solo el responsable lo modifica.'),
+    `<span class="hl-g">📄 Archivo:</span>  ${cn}${ext}\n<span class="hl-g">📂 Ruta:</span>     /BMO/SECTOR-01/${isC?'COORD':'MODEL'}/SISTEMAS/${sc}/${nc}/\n\n<span class="hl-b">🔗 Vinculado a:</span>\n   MST-SIS-${sc}.rvt\n   ${isC?'MST-PISO':'MST-NVL'}-${nc}.${isC?'nwd':'rvt'}\n   MASTER-MASTER.rvt${u?'\n\n<span class="hl">🌐 Enlace:</span> '+u:''}`,
+    true,cn);
 }
-
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-// ── CELL MODALS ──────────────────────────────
-function showCell(cn, sc, sl, nc, nl) {
-  const lnk = getLink(cn);
-  const code = `<span class="hl-g">📄 Archivo:</span>  ${cn}.rvt\n<span class="hl-g">📂 Ruta:</span>     /${nc}/${sc}/${cn}.rvt\n\n<span class="hl-b">🔗 Vinculado a:</span>\n   MST-SIS-${sc}.rvt\n   MST-NVL-${nc}.nwd\n   MASTER-MASTER.rvt${lnk ? '\n\n<span class="hl">🌐 Enlace:</span> '+lnk : ''}`;
-  openModal(
-    'Archivo gris · '+proj().name,
-    cn+'.rvt',
-    sl+' · '+nl+' — Solo el responsable de esta intersección lo modifica.',
-    code, true, cn
-  );
+function showMSis(cod,label){
+  const links=proj().niveles.map(n=>'   '+cod+'-'+n.cod+'.rvt').join('\n');
+  openModal('Master de Sistema',`MST-SIS-${cod}.rvt`,label+' · Vincula todos los niveles → documentación ejecutiva.',
+    `<span class="hl-b">📄 Archivo:</span>  MST-SIS-${cod}.rvt\n<span class="hl-b">📂 Ruta:</span>     /MODEL/MASTER-SISTEMAS/\n\n<span class="hl-b">🔗 Vincula (${proj().niveles.length} niveles):</span>\n${links}\n\n<span class="hl">📋 Genera:</span> Láminas de documentación ejecutiva`,
+    false,null);
 }
-
-function showMasterSistema(cod, label) {
-  const links = proj().niveles.map(n=>'   '+cod+'-'+n.cod+'.rvt').join('\n');
-  openModal(
-    'Master de Sistema',
-    'MST-SIS-'+cod+'.rvt',
-    label+' · Vincula todos los niveles verticalmente → genera documentación ejecutiva.',
-    `<span class="hl-b">📄 Archivo:</span>  MST-SIS-${cod}.rvt\n<span class="hl-b">📂 Ruta:</span>     /MASTERS/SISTEMAS/\n\n<span class="hl-b">🔗 Vincula (${proj().niveles.length} archivos):</span>\n${links}\n\n<span class="hl">📋 Genera:</span> Láminas documentación ejecutiva\n         Planos por sistema · Vista vertical`,
-    false, null
-  );
+function showMNivel(cod,label,isC){
+  const ext=isC==='true'?'.nwd':'.rvt';const tipo=isC==='true'?'MST-PISO':'MST-NVL';
+  const links=proj().sistemas.map(s=>`   ${s.cod}-${cod}${ext}`).join('\n');
+  openModal(isC==='true'?'Master de Piso':'Master de Nivel',`${tipo}-${cod}${ext}`,
+    label+' · Vincula todos los sistemas del piso → '+(isC==='true'?'Clash detection 3D':'Coordinación'),
+    `<span class="hl-b">📄 Archivo:</span>  ${tipo}-${cod}${ext}\n<span class="hl-b">📂 Ruta:</span>     /${isC==='true'?'COORD':'MODEL'}/MASTER-${isC==='true'?'PISO':'SISTEMAS'}/\n\n<span class="hl-b">🔗 Vincula (${proj().sistemas.length} sistemas):</span>\n${links}\n\n<span class="hl">🔍 Genera:</span> ${isC==='true'?'Coordinación 3D · Clash detection':'Coordinación 2D · Documentación'}`,
+    false,null);
 }
-
-function showMasterNivel(cod, label) {
-  const links = proj().sistemas.map(s=>'   '+s.cod+'-'+cod+' → .rvt / .ifc / .dwf').join('\n');
-  openModal(
-    'Master de Nivel',
-    'MST-NVL-'+cod+'.nwd',
-    label+' · Vincula todos los sistemas del piso → detección de interferencias.',
-    `<span class="hl-b">📄 Archivo:</span>  MST-NVL-${cod}.nwd  (Navisworks)\n<span class="hl-b">📂 Ruta:</span>     /MASTERS/NIVELES/\n\n<span class="hl-b">🔗 Vincula (${proj().sistemas.length} sistemas):</span>\n${links}\n\n<span class="hl">🔍 Genera:</span> Coordinación 3D · Clash detection\n         Vista horizontal completa del nivel`,
-    false, null
-  );
+function showMM(){
+  const links=proj().sistemas.map(s=>`   MST-SIS-${s.cod}.rvt`).join('\n');
+  openModal('Master Master · Totalizador','MASTER-MASTER.rvt','100% del proyecto. Solo lectura. Retropropagación automática.',
+    `<span class="hl-b">📄 Archivo:</span>  MASTER-MASTER.rvt\n<span class="hl-b">📂 Ruta:</span>     /MODEL/MASTER-MASTER/\n\n<span class="hl-b">🔗 Vincula todos los Masters de Sistema:</span>\n${links}\n\n<span class="hl">👁  Instancias:</span>\n   • Ventas → unidades / precios\n   • Legal → planos municipales\n   • Construcción → avance de obra\n\n<span class="hl">⚠️  Solo lectura.</span> Nunca modificar directamente.`,
+    false,null);
 }
-
-function showMasterMaster() {
-  const links = proj().sistemas.map(s=>'   MST-SIS-'+s.cod+'.rvt').join('\n');
-  openModal(
-    'Master Master · Totalizador',
-    'MASTER-MASTER.rvt',
-    '100% del proyecto. Solo lectura. Actualización automática por retropropagación.',
-    `<span class="hl-b">📄 Archivo:</span>  MASTER-MASTER.rvt\n<span class="hl-b">📂 Ruta:</span>     /MASTERS/\n\n<span class="hl-b">🔗 Vincula todos los Masters de Sistema:</span>\n${links}\n\n<span class="hl">👁  Instancias:</span>\n   • Ventas      → unidades / precios\n   • Legal       → planos municipales\n   • Construcción → avance de obra\n\n<span class="hl">⚠️  Solo lectura.</span> Nunca se modifica directamente.`,
-    false, null
-  );
-}
-
-function showFileList() {
-  const p = proj();
-  const ag = p.niveles.length * p.sistemas.length;
-  let list = `=== ${p.name} ===\n`;
-  list += `Miller & Co. Standard · ${p.niveles.length} niveles · ${p.sistemas.length} sistemas\n\n`;
-  list += '─── ARCHIVOS GRISES ──────────────────\n';
-  p.niveles.forEach(n => {
-    list += `\n📂 ${n.cod} — ${n.label}\n`;
-    p.sistemas.forEach(s => {
-      const lnk = getLink(s.cod+'-'+n.cod);
-      list += `   📄 ${s.cod}-${n.cod}.rvt${lnk?' 🌐':''}\n`;
-    });
+function showFileList(){
+  const p=proj();const ag=p.niveles.length*p.sistemas.length;
+  let list=`=== ${p.name} · Miller & Co. ===\n${p.niveles.length} niveles · ${p.sistemas.length} sistemas\n\n`;
+  list+='─── MODEL / SISTEMAS ──────────────────\n';
+  p.niveles.forEach(n=>{
+    list+=`\n📂 ${n.cod} — ${n.label}\n`;
+    p.sistemas.forEach(s=>{const u=lk(`${s.cod}-${n.cod}`);list+=`   📄 ${s.cod}-${n.cod}.rvt${u?' 🌐':''}\n`});
   });
-  list += '\n─── MASTERS DE SISTEMAS ──────────────\n';
-  p.sistemas.forEach(s => { list += `📄 MST-SIS-${s.cod}.rvt\n`; });
-  list += '\n─── MASTERS DE NIVELES ───────────────\n';
-  p.niveles.forEach(n => { list += `📄 MST-NVL-${n.cod}.nwd\n`; });
-  list += '\n─── MASTER MASTER ────────────────────\n📄 MASTER-MASTER.rvt\n';
-  list += `\nTOTAL: ${ag+p.sistemas.length+p.niveles.length+1} archivos`;
-
-  openModal('Lista completa · '+p.name, 'Estructura de archivos', '🌐 = tiene enlace configurado. Toca una celda de la matriz para agregar o abrir su enlace.', list, false, null);
+  list+='\n─── MASTERS DE SISTEMAS ───────────────\n';
+  p.sistemas.forEach(s=>{list+=`📄 MST-SIS-${s.cod}.rvt\n`});
+  list+='\n─── MASTERS DE NIVEL / PISO ───────────\n';
+  p.niveles.forEach(n=>{list+=`📄 MST-NVL-${n.cod}.rvt  /  MST-PISO-${n.cod}.nwd\n`});
+  list+='\n─── MASTER MASTER ─────────────────────\n📄 MASTER-MASTER.rvt\n';
+  list+=`\nTOTAL: ${ag+p.sistemas.length+p.niveles.length+1} archivos\n🌐 = tiene enlace configurado`;
+  openModal('Lista completa · '+p.name,'Estructura de archivos','Toca una celda para agregar su enlace de Google Drive.',list,false,null);
 }
-
-// ── TOAST ────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2200);
-}
-
-// ── DRAG & DROP SISTEMAS (columnas) ──────────
-let _dragSisIdx = null;
-
-function dragSisStart(e, i) {
-  _dragSisIdx = i;
-  e.dataTransfer.effectAllowed = 'move';
-  setTimeout(() => {
-    const el = document.querySelector(`[data-sis-idx="${i}"]`);
-    if (el) el.classList.add('drag-ghost');
-  }, 0);
-}
-
-function dragSisOver(e, i) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  document.querySelectorAll('.drag-over-col').forEach(el => el.classList.remove('drag-over-col'));
-  document.querySelectorAll(`[data-sis-idx="${i}"]`).forEach(el => el.classList.add('drag-over-col'));
-}
-
-function dragSisLeave(e) {
-  document.querySelectorAll('.drag-over-col').forEach(el => el.classList.remove('drag-over-col'));
-}
-
-function dropSis(e, toIdx) {
-  e.preventDefault();
-  if (_dragSisIdx === null || _dragSisIdx === toIdx) { cleanDrag(); return; }
-  const arr = proj().sistemas;
-  const [moved] = arr.splice(_dragSisIdx, 1);
-  arr.splice(toIdx, 0, moved);
-  saveState(); render(); cleanDrag();
-  showToast('Sistema reordenado');
-}
-
-// ── DRAG & DROP NIVELES (filas) ───────────────
-let _dragNvlIdx = null;
-
-function dragNvlStart(e, i) {
-  _dragNvlIdx = i;
-  e.dataTransfer.effectAllowed = 'move';
-  setTimeout(() => {
-    const el = document.querySelector(`[data-nvl-idx="${i}"]`);
-    if (el) el.classList.add('drag-ghost');
-  }, 0);
-}
-
-function dragNvlOver(e, i) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  document.querySelectorAll('.drag-over-row').forEach(el => el.classList.remove('drag-over-row'));
-  const el = document.querySelector(`[data-nvl-idx="${i}"]`);
-  if (el) el.classList.add('drag-over-row');
-}
-
-function dragNvlLeave(e) {
-  document.querySelectorAll('.drag-over-row').forEach(el => el.classList.remove('drag-over-row'));
-}
-
-function dropNvl(e, toIdx) {
-  e.preventDefault();
-  if (_dragNvlIdx === null || _dragNvlIdx === toIdx) { cleanDrag(); return; }
-  const arr = proj().niveles;
-  const [moved] = arr.splice(_dragNvlIdx, 1);
-  arr.splice(toIdx, 0, moved);
-  saveState(); render(); cleanDrag();
-  showToast('Nivel reordenado');
-}
-
-function cleanDrag() {
-  _dragSisIdx = null;
-  _dragNvlIdx = null;
-  document.querySelectorAll('.drag-over-col, .drag-over-row, .drag-ghost')
-    .forEach(el => el.classList.remove('drag-over-col','drag-over-row','drag-ghost'));
-}
-
-// ── INIT ─────────────────────────────────────
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 render();
 </script>
 </body>
